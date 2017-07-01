@@ -1,7 +1,8 @@
 glsl4idea
 =========
 
-A language plugin for IntelliJ IDEA that provides basic support for GLSL language.
+A language plugin for IntelliJ IDEA that provides basic support for GLSL language.  
+**This fork adds support for special syntax elements introduced by glfx effects.**
 
 Current features:
 * Syntax highlighting
