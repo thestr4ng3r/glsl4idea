@@ -88,6 +88,9 @@ public class GLSLTypes {
     // Specials
     public static final GLSLOpaqueType VOID = GLSLOpaqueType.VOID;
 
+    // GLFX
+    public static final GLSLOpaqueType GLFX_SHADER = GLSLOpaqueType.GLFX_SHADER;
+
     public static final GLSLType UNKNOWN_TYPE = new GLSLType(null) {
         @NotNull
         public String getTypename() {

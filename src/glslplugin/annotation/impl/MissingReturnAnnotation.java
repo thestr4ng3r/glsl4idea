@@ -26,6 +26,7 @@ import glslplugin.lang.elements.GLSLTokenTypes;
 import glslplugin.lang.elements.declarations.GLSLFunctionDefinition;
 import glslplugin.lang.elements.statements.GLSLCompoundStatement;
 import glslplugin.lang.elements.statements.GLSLStatement;
+import glslplugin.lang.elements.types.GLSLType;
 import glslplugin.lang.elements.types.GLSLTypes;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +38,9 @@ import org.jetbrains.annotations.NotNull;
 public class MissingReturnAnnotation extends Annotator<GLSLFunctionDefinition> {
     @Override
     public void annotate(GLSLFunctionDefinition expr, AnnotationHolder holder) {
-        if (expr.getType().getReturnType() == GLSLTypes.VOID) return;
+        GLSLType returnType = expr.getType().getReturnType();
+        if (returnType == GLSLTypes.VOID || returnType == GLSLTypes.GLFX_SHADER)
+            return;
 
         final GLSLCompoundStatement body = expr.getBody();
         if(body == null)return;

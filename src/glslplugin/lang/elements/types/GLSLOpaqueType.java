@@ -119,6 +119,9 @@ public class GLSLOpaqueType extends GLSLType {
     public static final ShadowSampler samplerCubeShadow = new ShadowSampler("samplerCubeShadow");
     public static final ShadowSampler samplerCubeArrayShadow = new ShadowSampler("samplerCubeArrayShadow");
 
+    // GLFX
+    public static final GLSLOpaqueType GLFX_SHADER = new GLSLOpaqueType("shader");
+
     private final String typename;
 
     private GLSLOpaqueType(String typename) {

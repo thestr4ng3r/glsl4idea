@@ -212,6 +212,11 @@ public class GLSLTokenTypes {
 
     public static final IElementType RESERVED_KEYWORD = new GLSLElementType("RESERVED_KEYWORD");
 
+    // GLFX
+    public static final IElementType GLFX_SHADER_KEYWORD = new GLSLElementType("GLFX_SHADER_KEYWORD");
+    public static final IElementType GLFX_PROGRAM_KEYWORD = new GLSLElementType("GLFX_PROGRAM_KEYWORD");
+
+
     public static final TokenSet PREPROCESSOR_DIRECTIVES = TokenSet.create(
             PREPROCESSOR_BEGIN,
             PREPROCESSOR_END,
@@ -257,7 +262,8 @@ public class GLSLTokenTypes {
             TokenSet.create(SAMPLER_TYPE, ATOMIC_UINT_TYPE);
 
     public static final TokenSet TYPE_SPECIFIER_NONARRAY_TOKENS =
-            merge(TokenSet.create(VOID_TYPE), FLOAT_TYPE_SPECIFIER_NONARRAY, INTEGER_TYPE_SPECIFIER_NONARRAY,
+            merge(TokenSet.create(VOID_TYPE, GLFX_SHADER_KEYWORD, GLFX_PROGRAM_KEYWORD),
+                    FLOAT_TYPE_SPECIFIER_NONARRAY, INTEGER_TYPE_SPECIFIER_NONARRAY,
                     BOOL_TYPE_SPECIFIER_NONARRAY, MATRIX_TYPE_SPECIFIER_NONARRAY, OPAQUE_TYPE_SPECIFIER_NONARRAY,
                     TokenSet.create(STRUCT, NAMED_TYPE));
     //

@@ -256,6 +256,9 @@ cast { return RESERVED_KEYWORD; }
 namespace { return RESERVED_KEYWORD; }
 using { return RESERVED_KEYWORD; }
 
+/* GLFX keywords */
+shader { return GLFX_SHADER_KEYWORD; }
+program { return GLFX_PROGRAM_KEYWORD; }
 
 /* GLSL Symbols */
 "{"                     {return LEFT_BRACE; }

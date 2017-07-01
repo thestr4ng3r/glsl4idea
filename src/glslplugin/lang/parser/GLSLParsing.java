@@ -442,6 +442,10 @@ public final class GLSLParsing extends GLSLParsingBase {
             mark2.done(PARAMETER_DECLARATOR);
         }
 
+        // GLFX
+        if(tryMatch(COLON))
+            tryMatch(INTEGER_CONSTANT);
+
         mark.done(PARAMETER_DECLARATION);
     }
 
