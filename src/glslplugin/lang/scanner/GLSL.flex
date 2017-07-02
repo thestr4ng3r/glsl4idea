@@ -33,6 +33,7 @@ import java.util.ArrayList;
 %type IElementType
 
 %state PREPROCESSOR
+%state GLFX_PROGRAM_BODY
 
 %{
 %}
@@ -256,10 +257,23 @@ cast { return RESERVED_KEYWORD; }
 namespace { return RESERVED_KEYWORD; }
 using { return RESERVED_KEYWORD; }
 
-/* GLFX keywords */
+/* GLFX */
 shader { return GLFX_SHADER_KEYWORD; }
-program { return GLFX_PROGRAM_KEYWORD; }
+program { yybegin(GLFX_PROGRAM_BODY); return GLFX_PROGRAM_KEYWORD; }
 interface { return GLFX_INTERFACE_KEYWORD; }
+
+<GLFX_PROGRAM_BODY> {
+    {WHITE_SPACE}+        { return WHITE_SPACE; }
+    {LINE_TERMINATOR}     { return WHITE_SPACE; }
+    "="                   { return EQUAL; }
+    "("                   { return LEFT_PAREN; }
+    ")"                   { return RIGHT_PAREN; }
+    "}"                   { yybegin(YYINITIAL); return RIGHT_BRACE; }
+    vs                    { return GLFX_PROGRAM_VS_KEYWORD; }
+    fs                    { return GLFX_PROGRAM_FS_KEYWORD; }
+    {INTEGER_CONSTANT}    { return INTEGER_CONSTANT; }
+    {IDENTIFIER}          { return IDENTIFIER; }
+}
 
 /* GLSL Symbols */
 "{"                     {return LEFT_BRACE; }

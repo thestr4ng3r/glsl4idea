@@ -114,6 +114,10 @@ public class GLSLElementTypes {
 
     public static final IElementType CONDITION = new GLSLElementType("CONDITION");
 
+    // GLFX
+    public static final IElementType GLFX_PROGRAM_BLOCK = new GLSLElementType("GLFX_PROGRAM_BLOCK");
+    public static final IElementType GLFX_PROGRAM_SHADER_TYPE = new GLSLElementType("GLFX_PROGRAM_SHADER_TYPE");
+
     //Preprocessor dropins
     public static final class RedefinedTokenElementType extends GLSLElementType {
 

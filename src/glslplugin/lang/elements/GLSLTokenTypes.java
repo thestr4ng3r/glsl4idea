@@ -217,6 +217,13 @@ public class GLSLTokenTypes {
     public static final IElementType GLFX_PROGRAM_KEYWORD = new GLSLElementType("GLFX_PROGRAM_KEYWORD");
     public static final IElementType GLFX_INTERFACE_KEYWORD = new GLSLElementType("GLFX_INTERFACE_KEYWORD");
 
+    public static final IElementType GLFX_PROGRAM_VS_KEYWORD = new GLSLElementType("GLFX_PROGRAM_VS_KEYWORD");
+    public static final IElementType GLFX_PROGRAM_HS_KEYWORD = new GLSLElementType("GLFX_PROGRAM_HS_KEYWORD");
+    public static final IElementType GLFX_PROGRAM_DS_KEYWORD = new GLSLElementType("GLFX_PROGRAM_DS_KEYWORD");
+    public static final IElementType GLFX_PROGRAM_GS_KEYWORD = new GLSLElementType("GLFX_PROGRAM_GS_KEYWORD");
+    public static final IElementType GLFX_PROGRAM_FS_KEYWORD = new GLSLElementType("GLFX_PROGRAM_FS_KEYWORD");
+    public static final IElementType GLFX_PROGRAM_CS_KEYWORD = new GLSLElementType("GLFX_PROGRAM_CS_KEYWORD");
+
 
     public static final TokenSet PREPROCESSOR_DIRECTIVES = TokenSet.create(
             PREPROCESSOR_BEGIN,
@@ -263,7 +270,7 @@ public class GLSLTokenTypes {
             TokenSet.create(SAMPLER_TYPE, ATOMIC_UINT_TYPE);
 
     public static final TokenSet TYPE_SPECIFIER_NONARRAY_TOKENS =
-            merge(TokenSet.create(VOID_TYPE, GLFX_SHADER_KEYWORD, GLFX_PROGRAM_KEYWORD),
+            merge(TokenSet.create(VOID_TYPE, GLFX_SHADER_KEYWORD),
                     FLOAT_TYPE_SPECIFIER_NONARRAY, INTEGER_TYPE_SPECIFIER_NONARRAY,
                     BOOL_TYPE_SPECIFIER_NONARRAY, MATRIX_TYPE_SPECIFIER_NONARRAY, OPAQUE_TYPE_SPECIFIER_NONARRAY,
                     TokenSet.create(STRUCT, NAMED_TYPE));
@@ -368,6 +375,11 @@ public class GLSLTokenTypes {
             QUALIFIER_TOKENS,
             EXPRESSION_FIRST_SET
     );
+
+    // GLFX
+    public static final TokenSet GLFX_PROGRAM_SHADER_TYPES = TokenSet.create(
+            GLFX_PROGRAM_VS_KEYWORD, GLFX_PROGRAM_HS_KEYWORD, GLFX_PROGRAM_DS_KEYWORD, GLFX_PROGRAM_GS_KEYWORD,
+            GLFX_PROGRAM_FS_KEYWORD, GLFX_PROGRAM_CS_KEYWORD);
 
     public static TokenSet merge(TokenSet... sets) {
         TokenSet tokenSet = TokenSet.create();

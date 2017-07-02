@@ -287,6 +287,11 @@ public final class GLSLParsing extends GLSLParsingBase {
             return true;
         }
 
+        if(parseGLFXProgram()) {
+            mark.drop();
+            return true;
+        }
+
         parseTypeSpecifier();
         PsiBuilder.Marker postType = b.mark();
 
@@ -379,6 +384,12 @@ public final class GLSLParsing extends GLSLParsingBase {
             mark.done(VARIABLE_DECLARATION);
             b.error("Missing ';' after declaration.");
             return true;
+        } else if(b.getTokenType() == GLFX_PROGRAM_KEYWORD)  {
+            //mark = b.mark();
+            //b.advanceLexer();
+            //mark.done(QUALIFIER);
+            //b.advanceLexer();
+            //return true;
         }
 
         mark.rollbackTo();
@@ -1585,6 +1596,101 @@ public final class GLSLParsing extends GLSLParsingBase {
             return;
         }
         mark.done(LAYOUT_QUALIFIER_ID);
+    }
+
+    private boolean parseGLFXProgram() {
+        if(b.getTokenType() != GLFX_PROGRAM_KEYWORD)
+            return false;
+
+        final PsiBuilder.Marker mark = b.mark();
+
+        final PsiBuilder.Marker programMark = b.mark();
+        b.advanceLexer();
+        programMark.done(GLFX_PROGRAM_KEYWORD);
+
+        if(!tryMatch(IDENTIFIER)) {
+            mark.error("Identifier expected");
+            return true;
+        }
+
+        if(!tryMatch(LEFT_BRACE)) {
+            mark.error("Expected '{'");
+            return true;
+        }
+
+        while(b.getTokenType() != RIGHT_BRACE) {
+            parseGLFXProgramShader();
+        }
+
+        if(!tryMatch(RIGHT_BRACE)) {
+            mark.error("Expected '}'");
+            return true;
+        }
+
+        if(!tryMatch(SEMICOLON)) {
+            mark.error("Expected ';'");
+            return true;
+        }
+
+        mark.done(GLFX_PROGRAM_BLOCK);
+
+        return true;
+    }
+
+    private void parseGLFXProgramShader()
+    {
+        PsiBuilder.Marker mark = b.mark();
+        PsiBuilder.Marker typeMark = b.mark();
+        if(!GLFX_PROGRAM_SHADER_TYPES.contains(b.getTokenType())) {
+            b.advanceLexer();
+            typeMark.error("Expected shader type");
+            mark.drop();
+            return;
+        }
+        b.advanceLexer();
+        typeMark.done(GLFX_PROGRAM_SHADER_TYPE);
+
+        if(!tryMatch(LEFT_PAREN)) {
+            mark.error("Expected '('");
+            return;
+        }
+
+        if(!tryMatch(INTEGER_CONSTANT)) {
+            mark.error("Expected shader version number");
+            return;
+        }
+
+        if(!tryMatch(RIGHT_PAREN)) {
+            mark.error("Expected ')'");
+            return;
+        }
+
+        if(!tryMatch(EQUAL)) {
+            mark.error("Expected '='");
+            return;
+        }
+
+        if(!tryMatch(IDENTIFIER)) {
+            mark.error("Expected shader identifier");
+            return;
+        }
+
+        if(!tryMatch(LEFT_PAREN)) {
+            mark.error("Expected '('");
+            return;
+        }
+
+        if(!tryMatch(RIGHT_PAREN)) {
+            mark.error("Expected ')'");
+            return;
+        }
+
+        if(!tryMatch(SEMICOLON)) {
+            mark.error("Expected ';'");
+            return;
+        }
+
+        mark.done(GLFX_PROGRAM_SHADER_TYPE);
     }
 
     private final static class OperatorLevelTraits {
