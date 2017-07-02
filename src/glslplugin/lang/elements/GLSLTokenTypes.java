@@ -215,6 +215,7 @@ public class GLSLTokenTypes {
     // GLFX
     public static final IElementType GLFX_SHADER_KEYWORD = new GLSLElementType("GLFX_SHADER_KEYWORD");
     public static final IElementType GLFX_PROGRAM_KEYWORD = new GLSLElementType("GLFX_PROGRAM_KEYWORD");
+    public static final IElementType GLFX_INTERFACE_KEYWORD = new GLSLElementType("GLFX_INTERFACE_KEYWORD");
 
 
     public static final TokenSet PREPROCESSOR_DIRECTIVES = TokenSet.create(
@@ -305,7 +306,9 @@ public class GLSLTokenTypes {
             FLAT_KEYWORD,
             NOPERSPECTIVE_KEYWORD,
             //GLSL Layout qualifiers
-            LAYOUT_KEYWORD);
+            LAYOUT_KEYWORD,
+            // GLFX
+            GLFX_INTERFACE_KEYWORD);
 
     public static final TokenSet PRECISION_QUALIFIER_TOKENS = TokenSet.create(HIGHP_KEYWORD, MEDIUMP_KEYWORD, LOWP_KEYWORD);
 
@@ -314,7 +317,8 @@ public class GLSLTokenTypes {
             IN_KEYWORD,
             OUT_KEYWORD,
             UNIFORM_KEYWORD,
-            BUFFER_KEYWORD
+            BUFFER_KEYWORD,
+            GLFX_INTERFACE_KEYWORD
     );
 
     public static final TokenSet COMMENTS = TokenSet.create(COMMENT_BLOCK, COMMENT_LINE);

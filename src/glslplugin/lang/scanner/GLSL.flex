@@ -239,7 +239,7 @@ public { return RESERVED_KEYWORD; }
 static { return RESERVED_KEYWORD; }
 extern { return RESERVED_KEYWORD; }
 external { return RESERVED_KEYWORD; }
-interface { return RESERVED_KEYWORD; }
+/*interface { return RESERVED_KEYWORD; }*/
 long { return RESERVED_KEYWORD; }
 short { return RESERVED_KEYWORD; }
 half { return RESERVED_KEYWORD; }
@@ -259,6 +259,7 @@ using { return RESERVED_KEYWORD; }
 /* GLFX keywords */
 shader { return GLFX_SHADER_KEYWORD; }
 program { return GLFX_PROGRAM_KEYWORD; }
+interface { return GLFX_INTERFACE_KEYWORD; }
 
 /* GLSL Symbols */
 "{"                     {return LEFT_BRACE; }
