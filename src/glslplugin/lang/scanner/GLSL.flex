@@ -162,6 +162,33 @@ atomic_uint             {return ATOMIC_UINT_TYPE; }
 sampler(1D|2D|Cube|2DRect|1DArray|2DArray|CubeArray)Shadow { return SAMPLER_TYPE; }
 
 
+/* GLFX */
+shader { return GLFX_SHADER_KEYWORD; }
+program { yybegin(GLFX_PROGRAM_BODY); return GLFX_PROGRAM_KEYWORD; }
+interface { return GLFX_INTERFACE_KEYWORD; }
+
+<GLFX_PROGRAM_BODY> {
+    {WHITE_SPACE}+        { return WHITE_SPACE; }
+    {LINE_TERMINATOR}     { return WHITE_SPACE; }
+    "="                   { return EQUAL; }
+    "("                   { return LEFT_PAREN; }
+    ")"                   { return RIGHT_PAREN; }
+    "}"                   { yybegin(YYINITIAL); return RIGHT_BRACE; }
+    vs                    { return GLFX_PROGRAM_VS_KEYWORD; }
+    hs                    { return GLFX_PROGRAM_HS_KEYWORD; }
+    ds                    { return GLFX_PROGRAM_DS_KEYWORD; }
+    gs                    { return GLFX_PROGRAM_GS_KEYWORD; }
+    fs                    { return GLFX_PROGRAM_FS_KEYWORD; }
+    cs                    { return GLFX_PROGRAM_CS_KEYWORD; }
+    in                    { return LAYOUT_KEYWORD; }
+    out                   { return LAYOUT_KEYWORD; }
+    ":"                   { return COLON; }
+    ","                   { return COMMA; }
+    {INTEGER_CONSTANT}    { return INTEGER_CONSTANT; }
+    {IDENTIFIER}          { return IDENTIFIER; }
+}
+
+
 /* GLSL STORAGE QUALIFIERS */
 //note: these are declared separately to better support error handling
 //      for example swapping varying and centroid should not cause lexer failure.
@@ -260,28 +287,6 @@ sizeof { return RESERVED_KEYWORD; }
 cast { return RESERVED_KEYWORD; }
 namespace { return RESERVED_KEYWORD; }
 using { return RESERVED_KEYWORD; }
-
-/* GLFX */
-shader { return GLFX_SHADER_KEYWORD; }
-program { yybegin(GLFX_PROGRAM_BODY); return GLFX_PROGRAM_KEYWORD; }
-interface { return GLFX_INTERFACE_KEYWORD; }
-
-<GLFX_PROGRAM_BODY> {
-    {WHITE_SPACE}+        { return WHITE_SPACE; }
-    {LINE_TERMINATOR}     { return WHITE_SPACE; }
-    "="                   { return EQUAL; }
-    "("                   { return LEFT_PAREN; }
-    ")"                   { return RIGHT_PAREN; }
-    "}"                   { yybegin(YYINITIAL); return RIGHT_BRACE; }
-    vs                    { return GLFX_PROGRAM_VS_KEYWORD; }
-    hs                    { return GLFX_PROGRAM_HS_KEYWORD; }
-    ds                    { return GLFX_PROGRAM_DS_KEYWORD; }
-    gs                    { return GLFX_PROGRAM_GS_KEYWORD; }
-    fs                    { return GLFX_PROGRAM_FS_KEYWORD; }
-    cs                    { return GLFX_PROGRAM_CS_KEYWORD; }
-    {INTEGER_CONSTANT}    { return INTEGER_CONSTANT; }
-    {IDENTIFIER}          { return IDENTIFIER; }
-}
 
 /* GLSL Symbols */
 "{"                     {return LEFT_BRACE; }

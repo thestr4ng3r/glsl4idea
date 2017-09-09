@@ -19,6 +19,7 @@
 
 package glslplugin.lang.parser;
 
+import com.intellij.ide.plugins.PluginManager;
 import com.intellij.lang.ForeignLeafType;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
@@ -1694,6 +1695,20 @@ public final class GLSLParsing extends GLSLParsingBase {
         if(!tryMatch(RIGHT_PAREN)) {
             mark.error("Expected ')'");
             return;
+        }
+
+        if(tryMatch(COLON)) {
+            if(!parseLayoutQualifier()) {
+                mark.error("Expected layout qualifier");
+                return;
+            }
+
+            while(tryMatch(COMMA)) {
+                if(!parseLayoutQualifier()) {
+                    mark.error("Expected layout qualifier");
+                    return;
+                }
+            }
         }
 
         if(!tryMatch(SEMICOLON)) {
