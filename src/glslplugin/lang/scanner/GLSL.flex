@@ -270,7 +270,11 @@ interface { return GLFX_INTERFACE_KEYWORD; }
     ")"                   { return RIGHT_PAREN; }
     "}"                   { yybegin(YYINITIAL); return RIGHT_BRACE; }
     vs                    { return GLFX_PROGRAM_VS_KEYWORD; }
+    hs                    { return GLFX_PROGRAM_HS_KEYWORD; }
+    ds                    { return GLFX_PROGRAM_DS_KEYWORD; }
+    gs                    { return GLFX_PROGRAM_GS_KEYWORD; }
     fs                    { return GLFX_PROGRAM_FS_KEYWORD; }
+    cs                    { return GLFX_PROGRAM_CS_KEYWORD; }
     {INTEGER_CONSTANT}    { return INTEGER_CONSTANT; }
     {IDENTIFIER}          { return IDENTIFIER; }
 }
