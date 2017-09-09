@@ -21,8 +21,6 @@ package glslplugin.lang.scanner;
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import static glslplugin.lang.elements.GLSLTokenTypes.*;
-import java.util.List;
-import java.util.ArrayList;
 
 %%
 
@@ -34,6 +32,7 @@ import java.util.ArrayList;
 
 %state PREPROCESSOR
 %state GLFX_PROGRAM_BODY
+%state PREPROCESSOR_RAW_MODE
 
 %{
 %}
@@ -80,7 +79,7 @@ BLOCK_COMMENT       = "/*"([^"*"]|("*"+[^"*""/"]))*("*"+"/")?
 <PREPROCESSOR> {
   {WHITE_SPACE}+        { return WHITE_SPACE; }
   {LINE_TERMINATOR}     { yybegin(YYINITIAL); return PREPROCESSOR_END; }
-  \"([^\"\r\n])*\" { return PREPROCESSOR_STRING; }
+  \"([^\"\r\n])*\"      { return PREPROCESSOR_STRING; }
   define                { return PREPROCESSOR_DEFINE; }
   undef                 { return PREPROCESSOR_UNDEF; }
   if                    { return PREPROCESSOR_IF; }
@@ -90,12 +89,17 @@ BLOCK_COMMENT       = "/*"([^"*"]|("*"+[^"*""/"]))*("*"+"/")?
   elif                  { return PREPROCESSOR_ELIF; }
   endif                 { return PREPROCESSOR_ENDIF; }
   error                 { return PREPROCESSOR_ERROR; }
-  pragma                { return PREPROCESSOR_PRAGMA; }
-  extension             { return PREPROCESSOR_EXTENSION; }
-  version               { return PREPROCESSOR_VERSION; }
+  pragma                { yybegin(PREPROCESSOR_RAW_MODE); return PREPROCESSOR_PRAGMA; }
+  extension             { yybegin(PREPROCESSOR_RAW_MODE); return PREPROCESSOR_EXTENSION; }
+  version               { yybegin(PREPROCESSOR_RAW_MODE); return PREPROCESSOR_VERSION; }
   line                  { return PREPROCESSOR_LINE; }
   defined               { return PREPROCESSOR_DEFINED; }
   ##                    { return PREPROCESSOR_CONCAT; }
+}
+
+<PREPROCESSOR_RAW_MODE> {
+  {LINE_TERMINATOR}     { yybegin(YYINITIAL); return PREPROCESSOR_END; }
+  (\\?[^\\\r\n])*       { return PREPROCESSOR_RAW; }
 }
 
 <YYINITIAL> {
